@@ -1,0 +1,86 @@
+ 215  docto-bot
+   121  Jenkins
+    53  Doctolib releaser
+    26  DoctoBot
+    15  Julien Meichelbeck
+    10  Ivan Schneider
+     9  Edgar Muss
+     5  Andrew Dibble
+     5  Tetiana Shevchenko
+     5  De Nayer
+     4  Romain Pellerin
+     4  Melanie Godard
+     4  romain choquet
+     3  Matthieu Prat
+     3  Florent Beaurain
+     3  aanelli
+     3  melaniebrd
+     3  Olivier Tassinari
+     3  Nicolas Godfrin
+     3  Christophe Escobar
+     3  Mykhailo Rybak
+     3  Mickaël Morier
+     3  Dimitris Marlagkoutsos
+     3  Matthieu Kern
+     2  Alexandre Drukalski
+     2  Antoine Kuhn
+     2  Antoine Rambert
+     2  Benoit Lafontaine
+     2  Coralie Collignon
+     2  Isabelle COWAN-BERGMAN
+     2  Jean Quilbeuf
+     2  Jean-Marie GAUTEUR
+     2  Jessy Bernal
+     2  Lionel Kubwimana
+     2  Nerisa Chitrakar
+     2  Nicolas COCHIN
+     2  Paul Doidge
+     2  VictorTpo
+     2  Viorica Gonta
+     1  Gauthier FRANCOIS
+     1  Éric B
+     1  Jill Li
+     1  Julien Girard
+     1  Franck ZHANG
+     1  Jérémy Buisson
+     1  Kuba Gudz
+     1  Leo
+     1  Baptiste Girard-Carrabin
+     1  Mathieu Dupuy
+     1  Mathieu Ragueneau
+     1  Emmanuel Quincerot
+     1  Edgardo Gutierrez
+     1  Matthieu Vignolle
+     1  De Nayer Nicolas
+     1  Daniel Schley
+     1  Mohamed Abdeldayem
+     1  Clerton Araujo
+     1  clementdenys
+     1  ArthurRobein
+     1  Charlotte Feather
+     1  Olivier Dessyn
+     1  Champier Cyril
+     1  Owen Sela
+     1  Paul Cervera y Alvarez
+     1  Anna Dontcova
+     1  Pierre Merlin
+     1  Pierre-François de Rougé
+     1  Quentin 'Thornolf' Baudet
+     1  Quentin Ménoret
+     1  Camille Soetaert
+     1  Sandrine Godmez
+     1  Ségolène Alquier
+     1  Barry McVicker
+     1  Thibault Miranda de Oliveira
+     1  Thomas Bentkowski
+     1  Velina
+     1  Henri Longle
+     1  Hugo Bally
+     1  Hugo Chevalier
+     1  Victor Thépaut
+     1  Isabelle Erin Cowan-Bergman
+     1  Git helper
+     1  Jade Vandal
+     1  Alexis Woo
+     1  Vincent Milano
+     1  Jerome Borenstejn
