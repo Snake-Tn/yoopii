@@ -1,17 +1,16 @@
 class Api::AuthController < ApplicationController
 
   skip_before_action :authorize, only: [:authenticate]
+  include BCrypt
 
   def authenticate
-    params.require(%i[username mode])
+    params.require(%i[username password])
 
-    if params[:mode] == 'guest'
-      player = Player.new
-      player.username = params[:username]
-      player.save
-    end
+    player = Player.find_by({ username: params[:username] })
 
-    token = JWT.encode(player.to_json, Figaro.env.jwt_encryption_key, 'HS256')
+    return head :unauthorized unless player && player.password == params[:password]
+
+    token = JWT.encode({ id: player.id, username: player.username }, Figaro.env.jwt_encryption_key, 'HS256')
 
     render json: token
   end

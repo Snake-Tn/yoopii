@@ -12,15 +12,15 @@ class Api::RoomsController < ApplicationController
     room = Room.new room_params
     room.host = host
 
-    room.save
+    room.save!
     render json: room
   end
 
   def join
-
-    puts 'YESMAN'
-
-
+    room = Room.find(params[:id])
+    head :bad_request unless room.join? current_player
+    room.join(current_player)
+    room.save!
   end
 
 end

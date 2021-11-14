@@ -11,15 +11,31 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
+
+  def current_player
+    return @current_player if @current_player
+
+    @current_player = Player.new
+    @current_player.username = 'username1'
+    @current_player.password = 'password1'
+    @current_player.save!
+    @current_player
+  end
+
   def access_token
+    return @access_token if @access_token
+
+    @access_token = authenticate
+  end
+
+  private
+
+  def authenticate
     post '/api/authenticate', params: {
-      username: 'username1',
-      mode: 'guest'
+      username: current_player.username,
+      password: 'password1'
     }
     assert_response :success
     response.body
-  end
-  def current_player
-    Player.find_by(username: 'username1')
   end
 end

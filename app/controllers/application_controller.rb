@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session
 
   def authorize
-    render json: { error: 'unauthorized' }, status: :unauthorized unless current_player
+    render json: { error: 'unauthorized' }, status: :unauthorized unless access_token
   end
 
   private
@@ -23,7 +23,7 @@ class ApplicationController < ActionController::Base
     if access_token
       begin
         segments = JWT.decode(access_token, Figaro.env.jwt_encryption_key, true, algorithm: 'HS256')
-        JSON.parse(segments[0], { symbolize_names: true })
+        segments[0].symbolize_keys
       rescue JWT::DecodeError
         nil
       end

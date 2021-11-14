@@ -16,16 +16,33 @@ class Api::RoomsControllerTest < ActionDispatch::IntegrationTest
       Authorization: 'Bearer ' + access_token
     }
     assert_response :success
+    room = JSON.parse(response.body)
 
     assert_equal(1, Room.count)
-    created_room = Room.all.first
+    created_room = Room.find(room['id'])
     assert_equal 'title1', created_room.title
     assert_equal 'desc1', created_room.description
     assert_equal current_player, created_room.host
   end
 
-  test 'join an existent room as a guest' do
+  test 'host join his existent room as a guest' do
+    room = Room.new({ host: current_player, title: 'title1' })
+    room.save!
 
+    post "/api/rooms/#{room.id}/guests", headers: {
+      Authorization: 'Bearer ' + access_token
+    }
+    assert_response :bad_request
+  end
+
+  test 'join existent room as a guest' do
+    # room = Room.new({ host: current_player, title: 'title1' })
+    # room.save!
+    #
+    # post "/api/rooms/#{room.id}/guests", headers: {
+    #   Authorization: 'Bearer ' + access_token
+    # }
+    # assert_response :bad_request
   end
 
 end

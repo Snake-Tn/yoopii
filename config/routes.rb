@@ -10,4 +10,6 @@ Rails.application.routes.draw do
   post '/api/rooms/:id/guests', to: 'api/rooms#join'
 
   get '/api/games', to: 'api/games#index'
+
+  post '/api/players', to: 'api/players#create'
 end

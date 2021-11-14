@@ -12,10 +12,18 @@
 
 ActiveRecord::Schema.define(version: 2021_11_12_135542) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "games", force: :cascade do |t|
     t.string "location_url"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "guests", id: false, force: :cascade do |t|
+    t.bigint "room_id", null: false
+    t.bigint "player_id", null: false
   end
 
   create_table "players", force: :cascade do |t|
@@ -30,23 +38,12 @@ ActiveRecord::Schema.define(version: 2021_11_12_135542) do
     t.string "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "host_id"
-    t.integer "game_id"
+    t.bigint "host_id"
+    t.bigint "game_id"
     t.index ["game_id"], name: "index_rooms_on_game_id"
     t.index ["host_id"], name: "index_rooms_on_host_id"
   end
 
-  create_table "rooms_guests", force: :cascade do |t|
-    t.integer "room_id"
-    t.integer "guest_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["guest_id"], name: "index_rooms_guests_on_guest_id"
-    t.index ["room_id"], name: "index_rooms_guests_on_room_id"
-  end
-
   add_foreign_key "rooms", "games"
   add_foreign_key "rooms", "players", column: "host_id"
-  add_foreign_key "rooms_guests", "players", column: "guest_id"
-  add_foreign_key "rooms_guests", "rooms"
 end
