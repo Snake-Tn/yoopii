@@ -33,6 +33,33 @@ class Api::RoomsControllerTest < ActionDispatch::IntegrationTest
     assert_equal current_player, created_room.host
   end
 
+  test 'create room - already hosting another room' do
+    game = create :game
+    exisent_room = create :room, host: current_player
+    post api_rooms_path, params: {
+      title: 'title1',
+      description: 'desc1',
+      game_id: game.id
+    }, headers: auth_header
+
+    assert_raises(ActiveRecord::RecordNotFound) { Room.find(exisent_room.id) }
+    assert_equal(1, Room.count)
+  end
+
+  test 'create room - already joining another room' do
+    game = create :game
+    exisent_room = (create :room).join(current_player)
+
+
+    post api_rooms_path, params: {
+      title: 'title1',
+      description: 'desc1',
+      game_id: game.id
+    }, headers: auth_header
+
+    assert_not exisent_room.guests.include? current_player
+  end
+
   test 'delete room' do
     room = create :room, host: current_player
 
