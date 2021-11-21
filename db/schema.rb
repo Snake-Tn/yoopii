@@ -17,13 +17,9 @@ ActiveRecord::Schema.define(version: 2021_11_12_135542) do
 
   create_table "games", force: :cascade do |t|
     t.string "location_url"
+    t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "guests", id: false, force: :cascade do |t|
-    t.bigint "room_id", null: false
-    t.bigint "player_id", null: false
   end
 
   create_table "players", force: :cascade do |t|
@@ -31,6 +27,13 @@ ActiveRecord::Schema.define(version: 2021_11_12_135542) do
     t.string "password_hash"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "room_guests", force: :cascade do |t|
+    t.bigint "player_id", null: false
+    t.bigint "room_id", null: false
+    t.index ["player_id"], name: "index_room_guests_on_player_id"
+    t.index ["room_id"], name: "index_room_guests_on_room_id"
   end
 
   create_table "rooms", force: :cascade do |t|
@@ -44,6 +47,8 @@ ActiveRecord::Schema.define(version: 2021_11_12_135542) do
     t.index ["host_id"], name: "index_rooms_on_host_id"
   end
 
+  add_foreign_key "room_guests", "players"
+  add_foreign_key "room_guests", "rooms"
   add_foreign_key "rooms", "games"
   add_foreign_key "rooms", "players", column: "host_id"
 end

@@ -1,5 +1,8 @@
-class RoomGuest < ApplicationRecord
-  has_one :room
-  has_many :guests, class_name: Player.to_s
-end
+# frozen_string_literal: true
 
+class RoomGuest < ApplicationRecord
+
+  belongs_to :room
+  belongs_to :player
+
+end

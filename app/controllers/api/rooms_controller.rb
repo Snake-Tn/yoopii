@@ -1,26 +1,22 @@
 class Api::RoomsController < ApplicationController
 
   def index
-
-    render json: '{"games": []}'
+    @rooms = Room.all
   end
 
   def create
-    room_params = params.permit(:description, :title)
-    host = current_player
+    room_params = params.permit(:description, :title, :game_id)
 
-    room = Room.new room_params
-    room.host = host
+    @room = Room.new room_params
+    @room.host = current_player
 
-    room.save!
-    render json: room
+    @room.save!
   end
 
-  def join
+  def destroy
     room = Room.find(params[:id])
-    head :bad_request unless room.join? current_player
-    room.join(current_player)
-    room.save!
+    authorize room
+    room.destroy!
   end
 
 end

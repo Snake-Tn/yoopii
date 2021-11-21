@@ -1,6 +1,6 @@
 class Api::PlayersController < ApplicationController
 
-  skip_before_action :authorize, only: [:create]
+  skip_before_action :authenticate, only: [:create]
 
   def create
     params.require([:mode, :username])
@@ -16,7 +16,6 @@ class Api::PlayersController < ApplicationController
     player.password = @password
     player.save!
     self.status = :created
-    @password
   end
 
   private

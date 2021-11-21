@@ -3,7 +3,7 @@ require "test_helper"
 class PlayersControllerTest < ActionDispatch::IntegrationTest
 
   def test_create_player_guest_mode
-    post '/api/players', params: {
+    post api_players_path, params: {
       username: 'username1',
       mode: 'guest'
     }

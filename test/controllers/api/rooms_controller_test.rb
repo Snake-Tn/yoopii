@@ -1,20 +1,28 @@
-require "test_helper"
+require 'test_helper'
 
 class Api::RoomsControllerTest < ActionDispatch::IntegrationTest
 
-  test "create room - not authenticated" do
-    post '/api/rooms', params: {
-    }
+  test 'not authenticated' do
+    post '/api/rooms'
     assert_response :unauthorized
   end
 
+  test 'index' do
+    create :room
+    create :room
+    get api_rooms_path, headers: auth_header
+    assert_response :success
+    rooms = JSON.parse(response.body)
+    assert_equal 2, rooms.count
+  end
+
   test 'create room' do
-    post '/api/rooms', params: {
+    game = create :game
+    post api_rooms_path, params: {
       title: 'title1',
-      description: 'desc1'
-    }, headers: {
-      Authorization: 'Bearer ' + access_token
-    }
+      description: 'desc1',
+      game_id: game.id
+    }, headers: auth_header
     assert_response :success
     room = JSON.parse(response.body)
 
@@ -25,24 +33,20 @@ class Api::RoomsControllerTest < ActionDispatch::IntegrationTest
     assert_equal current_player, created_room.host
   end
 
-  test 'host join his existent room as a guest' do
-    room = Room.new({ host: current_player, title: 'title1' })
-    room.save!
+  test 'delete room' do
+    room = create :room, host: current_player
 
-    post "/api/rooms/#{room.id}/guests", headers: {
-      Authorization: 'Bearer ' + access_token
-    }
-    assert_response :bad_request
+    delete api_room_path(room.id), headers: auth_header
+    assert_response :success
+    assert_not Room.exists?(room.id)
   end
 
-  test 'join existent room as a guest' do
-    # room = Room.new({ host: current_player, title: 'title1' })
-    # room.save!
-    #
-    # post "/api/rooms/#{room.id}/guests", headers: {
-    #   Authorization: 'Bearer ' + access_token
-    # }
-    # assert_response :bad_request
+  test 'delete room - not authorized' do
+    room = create :room
+
+    delete api_room_path(room.id), headers: auth_header
+    assert_response :forbidden
+    assert Room.exists?(room.id)
   end
 
 end

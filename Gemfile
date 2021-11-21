@@ -62,3 +62,5 @@ gem 'jwt'
 gem "figaro", "~> 1.2"
 
 gem "pg", "~> 1.2"
+
+gem "pundit", "~> 2.1"

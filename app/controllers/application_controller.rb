@@ -1,14 +1,28 @@
 class ApplicationController < ActionController::Base
 
-  before_action :authorize
+  include Pundit
 
-  skip_before_action :authorize, only: [:home]
+  before_action :authenticate
+
+  skip_before_action :authenticate, only: [:home]
 
   protect_from_forgery with: :null_session
 
-  def authorize
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
+  def authenticate
     render json: { error: 'unauthorized' }, status: :unauthorized unless access_token
   end
+
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
+  private
+
+  def user_not_authorized
+    head :forbidden
+  end
+
+  def home; end
 
   private
 
@@ -18,17 +32,20 @@ class ApplicationController < ActionController::Base
     @current_player = Player.find access_token[:id]
   end
 
+  def current_user
+    current_player
+  end
+
   def access_token
     access_token = request.headers['Authorization']&.delete_prefix 'Bearer '
-    if access_token
-      begin
-        segments = JWT.decode(access_token, Figaro.env.jwt_encryption_key, true, algorithm: 'HS256')
-        segments[0].symbolize_keys
-      rescue JWT::DecodeError
-        nil
-      end
+    return nil unless access_token
+
+    begin
+      segments = JWT.decode(access_token, Figaro.env.jwt_encryption_key, true, algorithm: 'HS256')
+      segments[0].symbolize_keys
+    rescue JWT::DecodeError
+      nil
     end
   end
 
-  def home; end
 end
