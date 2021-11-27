@@ -3,7 +3,7 @@ class Api::PlayersController < ApplicationController
   skip_before_action :authenticate, only: [:create]
 
   def create
-    params.require([:mode, :username])
+    params.require(%i[mode username])
 
     @password = if params[:mode] == 'guest'
                   random_password

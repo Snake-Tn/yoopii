@@ -24,12 +24,12 @@ class ActiveSupport::TestCase
   def access_token
     return @access_token if @access_token
 
-    post api_token_path, params: {
+    post api_tokens_path, params: {
       username: current_player.username,
       password: :my_password
     }
     assert_response :success
-    @access_token = response.body
+    @access_token = JSON.parse(response.body)['token']
   end
 
 end

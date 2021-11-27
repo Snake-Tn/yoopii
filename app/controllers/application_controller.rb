@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
 
   before_action :authenticate
 
-  skip_before_action :authenticate, only: [:home]
+  skip_before_action :authenticate, only: [:show]
 
   protect_from_forgery with: :null_session
 
@@ -14,17 +14,13 @@ class ApplicationController < ActionController::Base
     render json: { error: 'unauthorized' }, status: :unauthorized unless access_token
   end
 
-  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+  def show; end
 
   private
 
   def user_not_authorized
     head :forbidden
   end
-
-  def home; end
-
-  private
 
   def current_player
     return @current_player if @current_player

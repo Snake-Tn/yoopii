@@ -1,9 +1,9 @@
 require "test_helper"
 
-class Api::TokenControllerTest < ActionDispatch::IntegrationTest
+class Api::TokensControllerTest < ActionDispatch::IntegrationTest
 
   test 'create a token' do
-    post api_token_path, params: {
+    post api_tokens_path, params: {
       username: current_player.username,
       password: :my_password
     }
@@ -12,7 +12,7 @@ class Api::TokenControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'create a token - bad password' do
-    post api_token_path, params: {
+    post api_tokens_path, params: {
       username: current_player.username,
       password: 'bad_password'
     }
@@ -20,7 +20,7 @@ class Api::TokenControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'create a token - not found username' do
-    post api_token_path, params: {
+    post api_tokens_path, params: {
       username: 'not_found_username',
       password: 'bad_password'
     }

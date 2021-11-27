@@ -1,4 +1,4 @@
-class Api::TokenController < ApplicationController
+class Api::TokensController < ApplicationController
 
   skip_before_action :authenticate, only: [:create]
   include BCrypt
@@ -10,8 +10,7 @@ class Api::TokenController < ApplicationController
 
     return head :unauthorized unless player && player.password == params[:password]
 
-    token = JWT.encode({ id: player.id, username: player.username }, Figaro.env.jwt_encryption_key, 'HS256')
-    render json: token
+    @token = JWT.encode({ id: player.id, username: player.username }, Figaro.env.jwt_encryption_key, 'HS256')
   rescue ActiveRecord::RecordNotFound
     return head :not_found
   end
