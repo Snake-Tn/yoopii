@@ -1,4 +1,8 @@
 interface Room {
-    title: string
+    [index: string]: string,
+
+    title: string,
+    description: string,
 }
+
 export default Room

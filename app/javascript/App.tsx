@@ -15,8 +15,9 @@ const App = () => {
                      className="hero is-primary is-fullheight has-background-dark ">
 
         <Head currentPlayer={currentPlayer} setCurrentPlayer={setCurrentPlayer}/>
-        {!currentPlayer && <Login setCurrentPlayer={setCurrentPlayer}/>}
-        {currentPlayer && <Lobby/>}
+        {/*{!currentPlayer && <Login setCurrentPlayer={setCurrentPlayer}/>}*/}
+        {/*{currentPlayer && <Lobby/>}*/}
+        <Lobby/>
         <Foot/>
     </section>)
 }

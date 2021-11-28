@@ -37,9 +37,9 @@ const Login = ({setCurrentPlayer}: { setCurrentPlayer: (player: Player) => void 
         }
     }
 
-    return <div className="hero-body is-justify-content-center ">
+    return <div className="hero-body is-justify-content-center">
         <form onSubmit={onSubmit}>
-            <Input setValue={setUsername} value={username}
+            <Input setValue={setUsername} value={username} name={"username"}
                    className="has-background-grey-lighter input is-size-4" type="text" placeholder="Username"/>
             {error && <div>{error}</div>}
         </form>
