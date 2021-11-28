@@ -14,7 +14,9 @@ class ApplicationController < ActionController::Base
     render json: { error: 'unauthorized' }, status: :unauthorized unless access_token
   end
 
-  def show; end
+  def show
+    redirect_to '/' if params.has_key? "any"
+  end
 
   private
 

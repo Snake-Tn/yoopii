@@ -1,37 +1,37 @@
-import params from "../common/parameters"
+import params from "../parameters"
 import Input from "../common/Input"
 import axios from "axios"
 import React, {useState} from 'react';
 
-import {useNavigate} from "react-router-dom";
 import {Player} from '../types'
 
-const createPlayer = async (player: Player) => {
-    const {data} = await axios.post(params.api_players_path, player)
-    return Object.assign({}, player, data);
+const createPlayer = async (player: Player): Promise<void> => {
+    await axios.post<Player>(params.api_players_path, player)
 }
 
-const createToken = async (username: string, password: string) => {
-    const {data} = await axios.post(params.api_token_path, {username, password})
+const createToken = async (player: Player): Promise<string> => {
+    const {data} = await axios.post(params.api_token_path, player)
     return data.token
 }
 
-const Login = () => {
+const Login = ({setCurrentPlayer}: { setCurrentPlayer: (player: Player) => void }) => {
     const [username, setUsername] = useState('')
-    const [error, setError] = useState('')
-    const navigate = useNavigate()
+    const [error, setError] = useState<string>('')
 
-    const onSubmit = async (event) => {
+    const onSubmit = async (event: React.FormEvent) => {
         event.preventDefault()
-        setError(null)
+        setError('')
         try {
-            const player = await createPlayer({
+            const player = {
                 username: username,
-                mode: 'guest'
-            })
-            const token = await createToken(player.username, player.password)
-            localStorage.setItem('access_token', token)
-            navigate('/lobby');
+                password: Math.random().toString().substring(2, 6),
+                accessToken: ''
+            }
+            await createPlayer(player)
+            player.accessToken = await createToken(player)
+
+            player.password = ''
+            setCurrentPlayer(player)
         } catch (error) {
             setError('Whoops.. not working.')
         }

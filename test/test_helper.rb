@@ -9,8 +9,6 @@ class ActiveSupport::TestCase
   parallelize(workers: 1)
 
 
-  # Add more helper methods to be used by all tests here...
-
   def current_player
     return @current_player if @current_player
 

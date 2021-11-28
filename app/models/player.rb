@@ -1,7 +1,7 @@
 class Player < ApplicationRecord
   include BCrypt
 
-  def password= (password)
+  def password=(password)
     self.password_hash = Password.create(password)
   end
 

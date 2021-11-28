@@ -1,1 +1,1 @@
-json.password @password
+json.id @player.id
