@@ -11,7 +11,8 @@ class Api::TokensController < ApplicationController
     return head :unauthorized unless player && player.password == params[:password]
 
     @token = JWT.encode({ id: player.id, username: player.username }, Figaro.env.jwt_encryption_key, 'HS256')
+    render status: :created
   rescue ActiveRecord::RecordNotFound
-    return head :not_found
+    head :not_found
   end
 end

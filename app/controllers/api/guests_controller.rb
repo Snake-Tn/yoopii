@@ -7,6 +7,7 @@ class Api::GuestsController < ApplicationController
     RoomGuest.destroy_by(player: current_player)
     room.join(current_player)
     room.save!
+    head :created
   end
 
   def destroy
@@ -16,6 +17,7 @@ class Api::GuestsController < ApplicationController
     authorize room.room_guests.find_by!(player: player)
     room.evict(player)
     room.save!
+    head :ok
   rescue ActiveRecord::RecordNotFound
     head :not_found
   end

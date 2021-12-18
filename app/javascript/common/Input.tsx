@@ -11,7 +11,7 @@ const Input = (
     }:
         {
             setValue: (value: string, name: string) => void,
-            value: string,
+            value?: string,
             name: string,
             className: string,
             type: string,
@@ -22,6 +22,7 @@ const Input = (
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValue(e.target.value, e.target.name)
     }
-    return <input name={name} value={value} onChange={onChange} className={className} placeholder={placeholder} type={type}/>
+    return <input name={name} value={value} onChange={onChange} className={className} placeholder={placeholder}
+                  type={type}/>
 }
 export default Input

@@ -7,7 +7,7 @@ class Api::TokensControllerTest < ActionDispatch::IntegrationTest
       username: current_player.username,
       password: :my_password
     }
-    assert_response :success
+    assert_response :created
     assert_not_empty response.body
   end
 

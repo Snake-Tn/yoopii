@@ -1,9 +1,10 @@
 import params from "../parameters"
 import Input from "../common/Input"
 import axios from "axios"
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 
 import {Player} from '../types'
+import PlayerContext from "./PlayerContext";
 
 const createPlayer = async (player: Player): Promise<void> => {
     await axios.post<Player>(params.api_players_path, player)
@@ -14,7 +15,11 @@ const createToken = async (player: Player): Promise<string> => {
     return data.token
 }
 
-const Login = ({setCurrentPlayer}: { setCurrentPlayer: (player: Player) => void }) => {
+const Login = () => {
+    const playerContext = useContext(PlayerContext)
+    if (playerContext.player) {
+        return null
+    }
     const [username, setUsername] = useState('')
     const [error, setError] = useState<string>('')
 
@@ -31,7 +36,7 @@ const Login = ({setCurrentPlayer}: { setCurrentPlayer: (player: Player) => void 
             player.accessToken = await createToken(player)
 
             player.password = ''
-            setCurrentPlayer(player)
+            playerContext.setPlayer(player)
         } catch (error) {
             setError('Whoops.. not working.')
         }

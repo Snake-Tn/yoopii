@@ -5,7 +5,7 @@ import App from "../App"
 document.addEventListener('DOMContentLoaded', () => {
 
     ReactDOM.render(
-        <App/>,
+        <React.StrictMode><App/> </React.StrictMode>,
         document.body.appendChild(document.createElement('div')),
     )
 })

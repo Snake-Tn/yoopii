@@ -12,8 +12,8 @@ class Api::RoomsController < ApplicationController
 
     @room = Room.new room_params
     @room.host = current_player
-
     @room.save!
+    render status: :created
   end
 
   def destroy

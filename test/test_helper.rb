@@ -26,7 +26,7 @@ class ActiveSupport::TestCase
       username: current_player.username,
       password: :my_password
     }
-    assert_response :success
+    assert_response :created
     @access_token = JSON.parse(response.body)['token']
   end
 

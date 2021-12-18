@@ -6,7 +6,7 @@ class Api::PlayersController < ApplicationController
     player_params = params.permit(%i[password username])
 
     @player = Player.create player_params
-    self.status = :created
+    render status: :created
   end
 
 end
