@@ -4,7 +4,7 @@ import axios from "axios"
 import React, {useContext, useState} from 'react';
 
 import {Player} from '../types'
-import PlayerContext from "./PlayerContext";
+import AuthorizationContext from "../hooks/AuthorizationContext";
 
 const createPlayer = async (player: Player): Promise<void> => {
     await axios.post<Player>(params.api_players_path, player)
@@ -16,8 +16,8 @@ const createToken = async (player: Player): Promise<string> => {
 }
 
 const Login = () => {
-    const playerContext = useContext(PlayerContext)
-    if (playerContext.player) {
+    const authorizationContext = useContext(AuthorizationContext)
+    if (authorizationContext.player) {
         return null
     }
     const [username, setUsername] = useState('')
@@ -30,13 +30,13 @@ const Login = () => {
             const player = {
                 username: username,
                 password: Math.random().toString().substring(2, 6),
-                accessToken: ''
             }
             await createPlayer(player)
-            player.accessToken = await createToken(player)
+            const accessToken = await createToken(player)
 
             player.password = ''
-            playerContext.setPlayer(player)
+            authorizationContext.setPlayer(player)
+            authorizationContext.setAccessToken(accessToken)
         } catch (error) {
             setError('Whoops.. not working.')
         }

@@ -1,7 +1,6 @@
 interface Player {
     username: string,
-    password: string,
-    accessToken: string
+    password: string
 }
 
 export default Player

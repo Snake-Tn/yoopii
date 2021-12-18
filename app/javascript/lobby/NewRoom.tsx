@@ -1,11 +1,22 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Input from "../common/Input";
 import {Room, Game} from "../types";
 import axios from "axios";
 import params from "../parameters"
 
+const fetchAllGames = async (setGames: (games: Array<Game>) => void) => {
+    const response = await axios.get(params.api_games_path)
+    setGames(response.data)
+}
 
-const NewRoom = ({setHostedRoom, games}: { setHostedRoom: (room: Room) => void, games: Array<Game> }) => {
+const NewRoom = ({setHostedRoom}: { setHostedRoom: (room: Room) => void }) => {
+
+    const [games, setGames] = useState<Array<Game>>([])
+
+    useEffect(() => {
+        fetchAllGames(setGames)
+    }, [])
+
     const [roomData, setRoomData] = useState<{
         title: string,
         description: string,

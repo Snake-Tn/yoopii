@@ -5,18 +5,18 @@ import Head from "./common/Head";
 import Login from "./login/Login";
 import Lobby from "./lobby/Lobby";
 
-import {PlayerContextProvider} from "./login/PlayerContext";
+import {AuthorizationContextProvider} from "./hooks/AuthorizationContext";
 
 const App = () => {
 
     return (<section style={{height: '100vh', overflowX: 'hidden', overflowY: 'hidden'}}
                      className="hero is-primary is-fullheight has-background-dark ">
-        <PlayerContextProvider>
+        <AuthorizationContextProvider>
             <Head/>
             <Login/>
             <Lobby/>
             <Foot/>
-        </PlayerContextProvider>
+        </AuthorizationContextProvider>
     </section>)
 }
 
