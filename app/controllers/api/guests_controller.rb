@@ -1,5 +1,11 @@
 class Api::GuestsController < ApplicationController
 
+  def index
+    room = Room.find(params[:room_id])
+    authorize room, policy_class: RoomGuestPolicy
+    @guests = room.guests
+  end
+
   def create
     room = Room.find(params[:room_id])
     authorize room, policy_class: RoomGuestPolicy

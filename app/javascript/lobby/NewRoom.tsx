@@ -12,6 +12,7 @@ const fetchAllGames = async (setGames: (games: Array<Game>) => void) => {
 const NewRoom = ({setHostedRoom}: { setHostedRoom: (room: Room) => void }) => {
 
     const [games, setGames] = useState<Array<Game>>([])
+    const [error, setError] = useState<string>('')
 
     useEffect(() => {
         fetchAllGames(setGames)
@@ -38,6 +39,7 @@ const NewRoom = ({setHostedRoom}: { setHostedRoom: (room: Room) => void }) => {
                 setHostedRoom(response.data)
             }
         } catch {
+            setError('Oups... Are all fields filled in?')
         }
     }
 
@@ -68,11 +70,13 @@ const NewRoom = ({setHostedRoom}: { setHostedRoom: (room: Room) => void }) => {
                 </div>
             </div>
         </div>
+        <div className={'has-text-grey-lighter is-size-5'}>{error}</div>
         <div className="buttons is-right">
             <button type={'submit'} value={'submit'}
                     className="button has-text-weight-semibold has-text-white-ter has-background-success-dark ">Host
             </button>
         </div>
+
 
     </form>
 }

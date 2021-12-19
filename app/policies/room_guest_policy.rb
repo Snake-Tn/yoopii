@@ -1,5 +1,9 @@
 class RoomGuestPolicy < ApplicationPolicy
 
+  def index?
+    true
+  end
+
   def destroy?
     record.player == user ||
       record.room.host == user

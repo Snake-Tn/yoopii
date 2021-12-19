@@ -6,12 +6,14 @@ import React, {useContext, useState} from 'react';
 import {Player} from '../types'
 import AuthorizationContext from "../hooks/AuthorizationContext";
 
-const createPlayer = async (player: Player): Promise<void> => {
-    await axios.post<Player>(params.api_players_path, player)
+const createPlayer = async (playerData: { username: string, password: string }): Promise<Player> => {
+    const response = await axios.post<Player>(params.api_players_path, playerData)
+    return response.data
 }
 
-const createToken = async (player: Player): Promise<string> => {
+const createToken = async (player: { username: string, password: string }): Promise<string> => {
     const {data} = await axios.post(params.api_token_path, player)
+    axios.defaults.headers.common['Authorization'] = data.token;
     return data.token
 }
 
@@ -27,14 +29,13 @@ const Login = () => {
         event.preventDefault()
         setError('')
         try {
-            const player = {
+            const playerData = {
                 username: username,
                 password: Math.random().toString().substring(2, 6),
             }
-            await createPlayer(player)
-            const accessToken = await createToken(player)
+            const player = await createPlayer(playerData)
+            const accessToken = await createToken(playerData)
 
-            player.password = ''
             authorizationContext.setPlayer(player)
             authorizationContext.setAccessToken(accessToken)
         } catch (error) {

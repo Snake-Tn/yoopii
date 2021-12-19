@@ -44,10 +44,20 @@ class Api::GuestsControllerTest < ActionDispatch::IntegrationTest
     room = create :room
     guest = create :player
     room.join(guest)
-
     delete api_room_guest_path(room.id, guest.id), headers: auth_header
     assert_response :forbidden
+  end
 
+  test 'index - fetch all guests per room' do
+    room = create :room
+    3.times do
+      guest = create :player
+      room.join(guest)
+    end
+    get api_room_guests_path(room.id), headers: auth_header
+    assert_response :success
+    guests = JSON.parse(response.body)
+    assert_equal(3, guests.count)
   end
 
 end
