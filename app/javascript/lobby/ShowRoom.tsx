@@ -9,23 +9,38 @@ const fetchAllGuests = async (room: Room, setGuests: (guests: Array<Player>) => 
     setGuests(response.data)
 }
 
+
 const ShowRoom = ({room}: { room: Room }) => {
 
     const me = useContext(AuthorizationContext)
-    const isHostedByMe = room.id == me.player?.id
+    const isHostedByMe = room.host.id == me.player?.id
 
     const [guests, setGuests] = useState<Array<Player>>([])
+    const close = () => {
+        if (isHostedByMe) {
 
+        }
+    }
+    const kick = () => {
+        if (isHostedByMe) {
+
+        }
+    }
     useEffect(() => {
         fetchAllGuests(room, setGuests)
         setInterval(() => {
             fetchAllGuests(room, setGuests)
-        }, 5000)
+        }, 2000)
     }, [])
 
-    const guestsList = guests.map((guest) => <tr key={guest.id}>
-        <td>{guest.username}</td>
-    </tr>)
+    const guestsList = guests.map((guest) => <div className={'columns is-mobile'} key={guest.id}>
+            <div className={'column is-10 has-text-left'}>{guest.username}</div>
+
+            <div className={'column'}>
+                {isHostedByMe && <div onClick={kick} className={'button is-size-7 is-danger is-outlined'}>Kick</div>}
+            </div>
+        </div>
+    )
 
     return <div className={'p-1 has-background-grey-dark'}>
 
@@ -33,17 +48,15 @@ const ShowRoom = ({room}: { room: Room }) => {
             <div className={'has-text-success-dark column'}>{room.game.name}</div>
             <div className={'column'}>{room.title}</div>
             <div className={'column has-text-right'}>
-                <button className={'button is-normal is-dark'}>X</button>
+                <button onClick={close} className={'button is-normal is-dark'}>X</button>
             </div>
         </div>
 
         <div className={'is-size-6'}>{room.description}</div>
 
-        <table className="table is-narrow is-fullwidth ">
-            <tbody>
+        <div>
             {guestsList}
-            </tbody>
-        </table>
+        </div>
 
 
     </div>

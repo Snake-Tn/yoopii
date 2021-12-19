@@ -17,7 +17,7 @@ const ListRooms = ({setJoinedRoom}: { setJoinedRoom: (room: Room) => void }) => 
     }
     useEffect(() => {
         fetchAllRooms()
-        const interval = setInterval(fetchAllRooms, 10000)
+        const interval = setInterval(fetchAllRooms, 2000)
         return () => {
             clearInterval(interval)
         }
