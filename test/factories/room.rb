@@ -4,5 +4,6 @@ FactoryBot.define do
     description { 'desc' }
     host
     game
+    guests { [] }
   end
 end

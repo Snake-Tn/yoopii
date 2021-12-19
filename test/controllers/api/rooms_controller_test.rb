@@ -48,8 +48,7 @@ class Api::RoomsControllerTest < ActionDispatch::IntegrationTest
 
   test 'create room - already joining another room' do
     game = create :game
-    exisent_room = (create :room).join(current_player)
-
+    existent_room = (create :room, guests: [current_player])
 
     post api_rooms_path, params: {
       title: 'title1',
@@ -57,11 +56,19 @@ class Api::RoomsControllerTest < ActionDispatch::IntegrationTest
       game_id: game.id
     }, headers: auth_header
 
-    assert_not exisent_room.guests.include? current_player
+    assert_not existent_room.reload.guests.include? current_player
   end
 
-  test 'delete room' do
+  test 'delete room - no guests inside' do
     room = create :room, host: current_player
+
+    delete api_room_path(room.id), headers: auth_header
+    assert_response :success
+    assert_not Room.exists?(room.id)
+  end
+
+  test 'delete room - some guests inside' do
+    room = create :room, host: current_player, guests: [create(:player)]
 
     delete api_room_path(room.id), headers: auth_header
     assert_response :success

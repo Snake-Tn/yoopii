@@ -12,7 +12,6 @@ const HostedRoom = ({room, setHostedRoom}: { room: Room, setHostedRoom: (room: R
         if (response.status < 300) {
             setHostedRoom(undefined)
         }
-
     }
     const start = () => {
 

@@ -6,7 +6,7 @@ class Api::GuestsControllerTest < ActionDispatch::IntegrationTest
     room = create :room
     post api_room_guests_path(room.id), headers: auth_header
     assert_response :success
-    assert_equal 1, room.guests.size
+    assert_equal 1, room.guests.count
   end
 
   test 'create - unauthenticated' do
@@ -21,7 +21,7 @@ class Api::GuestsControllerTest < ActionDispatch::IntegrationTest
 
     delete api_room_guest_path(room.id, current_player.id), headers: auth_header
     assert_response :success
-    assert_equal 0, room.guests.size
+    assert_equal 0, room.guests.count
   end
 
   test 'destroy - leave non joined' do
@@ -31,13 +31,12 @@ class Api::GuestsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'destroy - kick' do
-    room = create :room, host: current_player
     guest = create :player
-    room.join(guest)
+    room = create :room, host: current_player, guests: [guest]
 
     delete api_room_guest_path(room.id, guest.id), headers: auth_header
     assert_response :success
-    assert_equal 0, room.guests.size
+    assert_equal 0, room.guests.count
   end
 
   test 'destroy - kick - not authorized' do
