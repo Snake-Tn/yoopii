@@ -1,5 +1,7 @@
 import React from 'react';
 import "bulma/css/bulma.min.css"
+import "@fortawesome/fontawesome-free/css/all.css";
+
 import Foot from "./common/Foot";
 import Head from "./common/Head";
 import Login from "./login/Login";

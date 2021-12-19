@@ -37,6 +37,9 @@ const ListRooms = ({setJoinedRoom}: { setJoinedRoom: (room: Room) => void }) => 
             </td>
         </tr>
     })
+    if (roomsList.length == 0) {
+        return null
+    }
 
     return <div>
 

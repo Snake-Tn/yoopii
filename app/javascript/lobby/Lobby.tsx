@@ -3,7 +3,8 @@ import NewRoom from './NewRoom';
 import ListRooms from "./ListRooms";
 import {Room} from "../types";
 import AuthorizationContext from "../hooks/AuthorizationContext";
-import ShowRoom from "./ShowRoom";
+import HostedRoom from "./room/HostedRoom";
+import JoinedRoom from "./room/JoinedRoom";
 
 const Lobby = () => {
 
@@ -15,11 +16,10 @@ const Lobby = () => {
     }
 
     return <div className={"container is-fluid my-6 is-size-4"}>
-
         {!joinedRoom && !hostedRoom && <ListRooms setJoinedRoom={setJoinedRoom}/>}
         {!joinedRoom && !hostedRoom && <NewRoom setHostedRoom={setHostedRoom}/>}
-        {hostedRoom && <ShowRoom room={hostedRoom}/>}
-        {joinedRoom && <ShowRoom room={joinedRoom}/>}
+        {hostedRoom && <HostedRoom setHostedRoom={setHostedRoom} room={hostedRoom}/>}
+        {joinedRoom && <JoinedRoom setJoinedRoom={setJoinedRoom} room={joinedRoom}/>}
     </div>
 }
 export default Lobby
