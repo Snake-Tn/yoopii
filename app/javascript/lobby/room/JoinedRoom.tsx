@@ -10,12 +10,11 @@ const JoinedRoom = ({room, setJoinedRoom}: { room: Room, setJoinedRoom: (room: R
     const me = useContext(AuthorizationContext).player
 
     const onLeave = async () => {
-        const response = await axios.delete(
+        setJoinedRoom(undefined)
+        axios.delete(
             params.api_guests_path.replace('{room_id}', room.id) + '/' + me?.id
-        )
-        if (response.status < 300) {
-            setJoinedRoom(undefined)
-        }
+        ).catch(() => {
+        })
     }
 
     const onGuestLeft = (player: Player) => {

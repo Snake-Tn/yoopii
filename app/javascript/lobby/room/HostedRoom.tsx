@@ -8,10 +8,9 @@ import ShowRoom from "./ShowRoom";
 const HostedRoom = ({room, setHostedRoom}: { room: Room, setHostedRoom: (room: Room | undefined) => void }) => {
 
     const close = async () => {
-        const response = await axios.delete(params.api_rooms_path + '/' + room.id)
-        if (response.status < 300) {
-            setHostedRoom(undefined)
-        }
+        setHostedRoom(undefined)
+        axios.delete(params.api_rooms_path + '/' + room.id).catch(() => {
+        })
     }
     const start = () => {
 

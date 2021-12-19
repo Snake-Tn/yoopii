@@ -7,7 +7,7 @@ const ShowRoom = ({
                       room,
                       withKicking = false,
                       onClose,
-                      onGuestLeft = (player: Player) => {
+                      onGuestLeft = () => {
                       },
                       children
                   }: {
@@ -23,13 +23,19 @@ const ShowRoom = ({
     const [guests, setGuests] = useState<Array<Player>>([])
     guestsRef.current = guests
     const fetchAllGuests = async () => {
-        console.log(guestsRef.current)
-        const response = await axios.get<Array<Player>>(params.api_guests_path.replace('{room_id}', room.id))
-        const quitters = guestsRef.current.filter((oldPlayer) => !response.data.some((newPlayer) => oldPlayer.id == newPlayer.id))
-        quitters.forEach((p) => {
-            onGuestLeft(p)
-        })
-        setGuests(response.data)
+        try {
+            const response = await axios.get<Array<Player>>(params.api_guests_path.replace('{room_id}', room.id))
+            if (response.status < 300) {
+                const quitters = guestsRef.current.filter((oldPlayer) => !response.data.some((newPlayer) => oldPlayer.id == newPlayer.id))
+                quitters.forEach((p) => {
+                    onGuestLeft(p)
+                })
+                setGuests(response.data)
+            }
+        } catch (e) {
+            onClose()
+        }
+
     }
     const kick = async (player: Player) => {
         const response = await axios.delete(
@@ -69,7 +75,8 @@ const ShowRoom = ({
         <div className={'is-size-6'}>{room.description}</div>
         <div>
             <div className={'columns is-mobile pl-4'}>
-                <div className={'column is-9 has-text-left'}>  {room.host.username} <i className={'fas px-2 fa-home'}/></div>
+                <div className={'column is-9 has-text-left'}>  {room.host.username} <i className={'fas px-2 fa-home'}/>
+                </div>
             </div>
             {guestsList}
         </div>
