@@ -22,7 +22,7 @@ const Input = (
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValue(e.target.value, e.target.name)
     }
-    return <input name={name} value={value} onChange={onChange} className={className} placeholder={placeholder}
+    return <input enterKeyHint="go" autoComplete="off" name={name} value={value} onChange={onChange} className={className} placeholder={placeholder}
                   type={type}/>
 }
 export default Input

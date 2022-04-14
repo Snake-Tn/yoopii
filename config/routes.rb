@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       resources :guests, only: %i[index create destroy]
     end
     resources :players, only: [:create]
+    resources :messages, only: %i[index create show]
 
     resources :games, only: [:index]
     resources :tokens, only: [:create]

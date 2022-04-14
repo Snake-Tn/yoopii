@@ -4,6 +4,7 @@ class Room < ApplicationRecord
 
   has_many :room_guests, dependent: :destroy
   has_many :guests, through: :room_guests, source: :player
+  # has_many :messages, dependent: :destroy, foreign_key: :receiver_id
 
   def join(guest)
     guests << guest
@@ -13,5 +14,9 @@ class Room < ApplicationRecord
   def evict(guest)
     guests.delete(guest)
     self
+  end
+
+  def players
+    guests + [host]
   end
 end

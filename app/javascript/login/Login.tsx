@@ -1,6 +1,6 @@
-import params from "../parameters"
-import Input from "../common/Input"
-import axios from "axios"
+import params from '../parameters'
+import Input from '../common/Input'
+import axios from 'axios'
 import React, {useContext, useState} from 'react';
 
 import {Player} from '../types'
@@ -33,7 +33,14 @@ const Login = () => {
                 username: username,
                 password: Math.random().toString().substring(2, 6),
             }
-            const player = await createPlayer(playerData)
+            let player
+            try {
+                player = await createPlayer(playerData)
+            } catch (e) {
+                playerData.username = playerData.username + Math.random().toString().substring(2, 4)
+                player = await createPlayer(playerData)
+            }
+
             const accessToken = await createToken(playerData)
 
             authorizationContext.setPlayer(player)
@@ -42,14 +49,15 @@ const Login = () => {
             setError('Whoops.. not working.')
         }
     }
-
-    return <div className="hero-body is-justify-content-center">
+    return <div className="m-6">
         <form onSubmit={onSubmit}>
             <Input setValue={setUsername} value={username} name={"username"}
-                   className="has-background-grey-lighter input is-size-4" type="text" placeholder="Username"/>
+                   className="mt-4 has-background-grey-lighter input is-size-5" type="text" placeholder="Username"/>
             {error && <div>{error}</div>}
         </form>
     </div>
+
+
 }
 
 export default Login

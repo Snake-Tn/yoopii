@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   end
 
   def show
-    redirect_to '/' if params.has_key? "any"
+    # redirect_to '/' if params.has_key? "any"
   end
 
   private

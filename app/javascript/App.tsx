@@ -1,13 +1,11 @@
 import React from 'react';
-import "bulma/css/bulma.min.css"
-import "@fortawesome/fontawesome-free/css/all.css";
 
 import Foot from "./common/Foot";
 import Head from "./common/Head";
-import Login from "./login/Login";
 import Lobby from "./lobby/Lobby";
 
 import {AuthorizationContextProvider} from "./hooks/AuthorizationContext";
+import Login from "./login/Login";
 
 const App = () => {
 

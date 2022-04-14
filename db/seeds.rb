@@ -3,5 +3,9 @@
 #
 # Examples:
 #
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+Game.create([
+                       { name: 'Empire Earth', location_url: 'http://localhost/empire-earth' },
+                       { name: 'Smartbash', location_url: 'http://localhost/Smartbash' },
+                     ]
+)
+
