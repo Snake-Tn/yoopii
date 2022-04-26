@@ -15,7 +15,7 @@ const Lobby = () => {
         return null
     }
 
-    return <div className={"container is-fluid my-6 is-size-4"}>
+    return <div style={{overflowY: 'scroll'}} className={"container is-fluid my-6 is-size-4"}>
         {!joinedRoom && !hostedRoom && <ListRooms setJoinedRoom={setJoinedRoom}/>}
         {!joinedRoom && !hostedRoom && <NewRoom setHostedRoom={setHostedRoom}/>}
         {hostedRoom && <HostedRoom setHostedRoom={setHostedRoom} room={hostedRoom}/>}

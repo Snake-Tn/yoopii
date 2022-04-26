@@ -1,6 +1,5 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {Player} from "../types";
-import axios from "axios"
 
 const AuthorizationContext = React.createContext<{
     player: Player | undefined,
@@ -16,18 +15,9 @@ const AuthorizationContext = React.createContext<{
 
 export const AuthorizationContextProvider = ({children}: { children: any }) => {
 
-    const [player, setPlayer] = React.useState<Player | undefined>(
-        // {
-        //     id: '1',
-        //     username: 'u',
-        //     password: 'HIDDEN',
-        // }
-    )
-    // const [accessToken, setAccessToken] = React.useState<string>('eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ1In0.fSVE810SNVqwvBEw-vAMYK1fHoOxILXUtJZxk2AXON0')
-    // axios.defaults.headers.common['Authorization'] = 'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJ1In0.fSVE810SNVqwvBEw-vAMYK1fHoOxILXUtJZxk2AXON0'
+    const [player, setPlayer] = React.useState<Player | undefined>()
+
     const [accessToken, setAccessToken] = React.useState<string>('')
-
-
 
     return <AuthorizationContext.Provider value={{
         player,

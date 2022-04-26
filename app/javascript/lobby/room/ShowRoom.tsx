@@ -1,7 +1,9 @@
 import {Room, Player} from "../../types";
 import React, {useEffect, useRef, useState} from "react";
 import axios from "axios";
+import "../../chat/ListMessages"
 import params from "../../parameters";
+import Chat from "../../chat/Chat";
 
 const ShowRoom = ({
                       room,
@@ -80,6 +82,7 @@ const ShowRoom = ({
             </div>
             {guestsList}
         </div>
+        <Chat roomId={room.id}/>
         {children}
     </div>
 }

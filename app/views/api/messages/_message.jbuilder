@@ -1,2 +1,2 @@
 json.extract! message, :id, :content
-# add sender & receiver to response
+json.sender message.sender, partial: 'api/players/player', as: :player

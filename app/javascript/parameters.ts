@@ -4,6 +4,7 @@ interface Params {
     api_rooms_path: string,
     api_guests_path: string,
     api_games_path: string,
+    api_messages_path: string,
 }
 
 const params: Params = {
@@ -12,6 +13,7 @@ const params: Params = {
     api_rooms_path: '/api/rooms',
     api_guests_path: '/api/rooms/{room_id}/guests',
     api_games_path: '/api/games',
+    api_messages_path: '/api/messages',
 }
 
 export default params
